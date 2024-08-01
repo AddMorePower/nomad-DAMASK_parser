@@ -1,10 +1,7 @@
 from nomad.config.models.plugins import ParserEntryPoint
-from pydantic import Field
 
 
 class MyParserEntryPoint(ParserEntryPoint):
-    parameter: int = Field(0, description='Custom configuration parameter')
-
     def load(self):
         from nomad_damask_parser.parsers.myparser import MyParser
 
@@ -14,5 +11,5 @@ class MyParserEntryPoint(ParserEntryPoint):
 myparser = MyParserEntryPoint(
     name='MyParser',
     description='Parser defined using the new plugin mechanism.',
-    mainfile_name_re='.*\.myparser',
+    mainfile_name_re='.*\.hdf5',
 )
