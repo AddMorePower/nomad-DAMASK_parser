@@ -97,9 +97,9 @@ class MyParser(MatchingParser):
 
             if key == 'homogenization':
                 self.sec_data.points_number = key_data.shape[0]
-                homoginezation_names = np.unique(key_data['label'])
-                self.sec_data.homoginezation_names = [
-                    name.decode('UTF-8') for name in homoginezation_names
+                homogenization_names = np.unique(key_data['label'])
+                self.sec_data.homogenization_names = [
+                    name.decode('UTF-8') for name in homogenization_names
                 ]
 
             if key == 'phase':
