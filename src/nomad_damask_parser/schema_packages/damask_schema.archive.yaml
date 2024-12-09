@@ -1,0 +1,246 @@
+definitions:
+  sections:
+    CompoundDataset1D:
+      quantities:
+        dim0:
+          type: int
+          description: 1st dimension
+        name:
+          type: str
+          description: Name of the dataset
+        unit:
+          type: str
+          description: Unit of the data in this dataset
+        description:
+          type: str
+          description: Information about the nature of the dataset
+        label:
+          type: str
+          shape: ['dim0']
+          description: Label of the compound element
+        entry:
+          type: np.int32
+          shape: ['dim0']
+          description: Entry integer of the compound element
+    CompoundDataset2D:
+      quantities:
+        dim0:
+          type: int
+          description: 1st dimension
+        dim1:
+          type: int
+          description: 2nd dimension
+        name:
+          type: str
+          description: Name of the dataset
+        unit:
+          type: str
+          description: Unit of the data in this dataset
+        description:
+          type: str
+          description: Information about the nature of the dataset
+        label:
+          type: str
+          shape: ['dim0']
+          description: Label of the compound element
+        entry:
+          type: np.int32
+          shape: ['dim0', 'dim1']
+          description: Entry integer of the compound element
+    Dataset1D:
+      quantities:
+        dim0:
+          type: int
+          description: 1st dimension
+        name:
+          type: str
+          description: Name of the dataset
+        unit:
+          type: str
+          description: Unit of the data in this dataset
+        description:
+          type: str
+          description: Information about the nature of the dataset
+        data:
+          type: np.float64
+          shape: ['dim0']
+          description: Placeholder for now for the data
+    Dataset2D:
+      quantities:
+        dim0:
+          type: int
+          description: 1st dimension
+        dim1:
+          type: int
+          description: 2nd dimension
+        name:
+          type: str
+          description: Name of the dataset
+        unit:
+          type: str
+          description: Unit of the data in this dataset
+        description:
+          type: str
+          description: Information about the nature of the dataset
+        data:
+          type: np.float64
+          shape: ['dim0', 'dim1']
+          description: Placeholder for now for the data
+    Dataset3D:
+      quantities:
+        dim0:
+          type: int
+          description: 1st dimension
+        dim1:
+          type: int
+          description: 2nd dimension
+        dim2:
+          type: int
+          description: 3rd dimension
+        name:
+          type: str
+          description: Name of the dataset
+        unit:
+          type: str
+          description: Unit of the data in this dataset
+        description:
+          type: str
+          description: Information about the nature of the dataset
+        data:
+          type: np.float64
+          shape: ['dim0', 'dim1', 'dim2']
+          description: Placeholder for now for the data
+    PhaseField:
+      quantities:
+        name:
+          type: {type_kind: Enum, type_data: ['mechanical', 'damage', 'thermal']}
+      sub_sections:
+        datasets1D:
+          section: Dataset1D
+          repeats: true
+        datasets2D:
+          section: Dataset2D
+          repeats: true
+        datasets3D:
+          section: Dataset3D
+          repeats: true
+    PhaseName:
+      quantities:
+        name:
+          type: str
+      sub_sections:
+        fields:
+          section: PhaseField
+          repeats: true
+    HomogenizationField:
+      quantities:
+        name:
+          type: {type_kind: Enum, type_data: ['mechanical', 'damage', 'thermal']}
+      sub_sections:
+        datasets1D:
+          section: Dataset1D
+          repeats: true
+        datasets2D:
+          section: Dataset2D
+          repeats: true
+        datasets3D:
+          section: Dataset3D
+          repeats: true
+    HomogenizationName:
+      quantities:
+        name:
+          type: str
+      sub_sections:
+        fields:
+          section: HomogenizationField
+          repeats: true
+    GeometryDataset:
+      sub_sections:
+        datasets1D:
+          section: Dataset1D
+          repeats: true
+        datasets2D:
+          section: Dataset2D
+          repeats: true
+        datasets3D:
+          section: Dataset3D
+          repeats: true
+    Increment:
+      quantities:
+        name:
+          type: str
+      sub_sections:
+        geometry:
+          section: GeometryDataset
+          repeats: false
+        homogenization:
+          section: HomogenizationName
+          repeats: true
+        phase:
+          section: PhaseName
+          repeats: true
+    SetupFile:
+      quantities:
+        name:
+          type: str
+    Setup:
+      quantities:
+        description:
+          type: str
+      sub_sections:
+        filenames:
+          section: SetupFile
+          repeats: true
+    Geometry:
+      quantities:
+        cells:
+          type: int
+          shape: [3]
+        origin:
+          type: np.float64
+          shape: [3]
+        size:
+          type: np.float64
+          shape: [3]
+    CellTo:
+      quantities:
+        description:
+          type: str
+      sub_sections:
+        datasets1D:
+          section: CompoundDataset1D
+          repeats: true
+        datasets2D:
+          section: CompoundDataset2D
+          repeats: true
+    DamaskOutput:
+      quantities:
+        code_version:
+          type: str
+        number_increments:
+          type: int
+          shape: []
+        phase_names:
+          type: str
+          shape: ['*']
+        homogenization_names:
+          type: str
+          shape: ['*']
+        points_number:
+          type: int
+          shape: []
+        solver_name:
+          type: str
+      sub_sections:
+        cell_to:
+          section: CellTo
+          repeats: false
+        geometry:
+          section: Geometry
+          repeats: false
+        increments:
+          section: Increment
+          repeats: true
+        setup:
+          section: Setup
+          repeats: false
