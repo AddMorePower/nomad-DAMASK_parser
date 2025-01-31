@@ -10,26 +10,30 @@ if TYPE_CHECKING:
         BoundLogger,
     )
 
-import os
-import h5py
 import logging
+import os
+
+import h5py
 import numpy as np
 from nomad.config import config
+from nomad.datamodel.results import Method, Properties, Results, Simulation
 from nomad.parsing.parser import MatchingParser
-from nomad.datamodel.results import Results, Method, Simulation, Properties
 
 import nomad_damask_parser.schema_packages.mypackage as damask
 
 configuration = config.get_plugin_entry_point('nomad_damask_parser.parsers:myparser')
 
 
-class MyParser(MatchingParser):
+dim_1 = 1
+dim_2 = 2
+dim_3 = 3
 
+
+class MyParser(MatchingParser):
     def get_attr(self, data, key):
         return data[key] if key in data else None
 
-
-###############################################################################
+    ###############################################################################
     def extract_dataset(self, name, data, section):
         """
         name: name of the dataset to extract
@@ -37,15 +41,15 @@ class MyParser(MatchingParser):
         section: schema section that will contain the damask.Dataset section
         """
         shape = list(data.shape)
-        if len(shape) == 1:
+        if len(shape) == dim_1:
             dataset = section.m_create(damask.Dataset1D)
             dataset.dim0 = shape[0]
 
-        if len(shape) == 2:
+        if len(shape) == dim_2:
             dataset = section.m_create(damask.Dataset2D)
             dataset.dim0, dataset.dim1 = shape[0], shape[1]
 
-        if len(shape) == 3:
+        if len(shape) == dim_3:
             dataset = section.m_create(damask.Dataset3D)
             dataset.dim0, dataset.dim1, dataset.dim2 = shape[0], shape[1], shape[2]
 
@@ -54,8 +58,7 @@ class MyParser(MatchingParser):
         dataset.unit = self.get_attr(data.attrs, 'unit')
         dataset.data = data[()]
 
-
-###############################################################################
+    ###############################################################################
     def extract_increment_section(self, increment, group, group_name, sections):
         """
         increment: schema section of the increment
@@ -76,18 +79,17 @@ class MyParser(MatchingParser):
                         field,
                     )
 
-
-###############################################################################
+    ###############################################################################
     def parse_cell_to(self):
         cell_to = self.sec_data.m_create(damask.CellTo)
 
         for key in self.cell_to.keys():
             key_data = self.cell_to.get(key)
             shape = list(key_data.shape)
-            if len(shape) == 1:
+            if len(shape) == dim_1:
                 dataset = cell_to.m_create(damask.CompoundDataset1D)
                 dataset.dim0 = shape[0]
-            if len(shape) == 2:
+            if len(shape) == dim_2:
                 dataset = cell_to.m_create(damask.CompoundDataset2D)
                 dataset.dim0, dataset.dim1 = shape[0], shape[1]
             dataset.name = key
@@ -104,13 +106,13 @@ class MyParser(MatchingParser):
 
             if key == 'phase':
                 phase_names = np.unique(key_data['label'])
-                self.sec_data.phase_names = [name.decode('UTF-8') for name in phase_names]
-
+                self.sec_data.phase_names = [
+                    name.decode('UTF-8') for name in phase_names
+                ]
 
         cell_to.description = self.get_attr(self.cell_to.attrs, 'description')
 
-
-###############################################################################
+    ###############################################################################
     def parse_setup(self):
         setup = self.sec_data.m_create(damask.Setup)
 
@@ -119,15 +121,13 @@ class MyParser(MatchingParser):
                 setupfile = setup.m_create(damask.SetupFile)
                 setupfile.name = key
 
-
-###############################################################################
+    ###############################################################################
     def parse_geometry(self):
         geometry = self.sec_data.m_create(damask.Geometry)
         for key, value in self.geometry.attrs.items():
             setattr(geometry, key, value)
 
-
-###############################################################################
+    ###############################################################################
     def parse_increments(self):
         for increment_group in self.increments:
             increment = self.sec_data.m_create(damask.Increment)
@@ -141,19 +141,18 @@ class MyParser(MatchingParser):
                 increment,
                 increment_group,
                 'homogenization',
-                [damask.HomogenizationName, damask.HomogenizationField]
+                [damask.HomogenizationName, damask.HomogenizationField],
             )
 
             self.extract_increment_section(
                 increment,
                 increment_group,
                 'phase',
-                [damask.PhaseName, damask.PhaseField]
+                [damask.PhaseName, damask.PhaseField],
             )
 
-
-###############################################################################
-###############################################################################
+    ###############################################################################
+    ###############################################################################
     def parse(
         self,
         filepath: str,
@@ -161,7 +160,6 @@ class MyParser(MatchingParser):
         logger: 'BoundLogger',
         child_archives: dict[str, 'EntryArchive'] = None,
     ) -> None:
-
         self.filepath = filepath
         self.archive = archive
         self.maindir = os.path.dirname(self.filepath)

@@ -10,17 +10,17 @@
 #         BoundLogger,
 #     )
 
-from numpy import dtype, str_
-
 from nomad.config import config
 from nomad.datamodel.data import Schema
-from nomad.metainfo import Quantity, SchemaPackage, MSection, SubSection, MEnum
+from nomad.metainfo import MEnum, MSection, Quantity, SchemaPackage, SubSection
+from numpy import dtype
 
 configuration = config.get_plugin_entry_point(
     'nomad_damask_parser.schema_packages:mypackage'
 )
 
 m_package = SchemaPackage()
+
 
 class CompoundDataset1D(MSection):
     dim0 = Quantity(type=int, description='1st dimension')
@@ -29,8 +29,15 @@ class CompoundDataset1D(MSection):
     description = Quantity(
         type=str, description='Information about the nature of the dataset'
     )
-    label = Quantity(type=str, shape=['dim0'], description='Label of the compound element')
-    entry = Quantity(type=dtype('int32'), shape=['dim0'], description='Entry integer of the compound element')
+    label = Quantity(
+        type=str, shape=['dim0'], description='Label of the compound element'
+    )
+    entry = Quantity(
+        type=dtype('int32'),
+        shape=['dim0'],
+        description='Entry integer of the compound element',
+    )
+
 
 class CompoundDataset2D(MSection):
     dim0 = Quantity(type=int, description='1st dimension')
@@ -40,8 +47,15 @@ class CompoundDataset2D(MSection):
     description = Quantity(
         type=str, description='Information about the nature of the dataset'
     )
-    label = Quantity(type=str, shape=['dim0'], description='Label of the compound element')
-    entry = Quantity(type=dtype('int32'), shape=['dim0', 'dim1'], description='Entry integer of the compound element')
+    label = Quantity(
+        type=str, shape=['dim0'], description='Label of the compound element'
+    )
+    entry = Quantity(
+        type=dtype('int32'),
+        shape=['dim0', 'dim1'],
+        description='Entry integer of the compound element',
+    )
+
 
 class Dataset1D(MSection):
     dim0 = Quantity(type=int, description='1st dimension')
@@ -50,7 +64,12 @@ class Dataset1D(MSection):
     description = Quantity(
         type=str, description='Information about the nature of the dataset'
     )
-    data = Quantity(type=dtype('float64'), shape=['dim0'], description='Placeholder for now for the data')
+    data = Quantity(
+        type=dtype('float64'),
+        shape=['dim0'],
+        description='Placeholder for now for the data',
+    )
+
 
 class Dataset2D(MSection):
     dim0 = Quantity(type=int, description='1st dimension')
@@ -60,7 +79,12 @@ class Dataset2D(MSection):
     description = Quantity(
         type=str, description='Information about the nature of the dataset'
     )
-    data = Quantity(type=dtype('float64'), shape=['dim0', 'dim1'], description='Placeholder for now for the data')
+    data = Quantity(
+        type=dtype('float64'),
+        shape=['dim0', 'dim1'],
+        description='Placeholder for now for the data',
+    )
+
 
 class Dataset3D(MSection):
     dim0 = Quantity(type=int, description='1st dimension')
@@ -71,7 +95,11 @@ class Dataset3D(MSection):
     description = Quantity(
         type=str, description='Information about the nature of the dataset'
     )
-    data = Quantity(type=dtype('float64'), shape=['dim0', 'dim1', 'dim2'], description='Placeholder for now for the data')
+    data = Quantity(
+        type=dtype('float64'),
+        shape=['dim0', 'dim1', 'dim2'],
+        description='Placeholder for now for the data',
+    )
 
 
 ###############################################################################
@@ -80,6 +108,7 @@ class PhaseField(MSection):
     datasets1D = SubSection(sub_section=Dataset1D.m_def, repeats=True)
     datasets2D = SubSection(sub_section=Dataset2D.m_def, repeats=True)
     datasets3D = SubSection(sub_section=Dataset3D.m_def, repeats=True)
+
 
 class PhaseName(MSection):
     name = Quantity(type=str, description='User defined name of the phase')
@@ -91,6 +120,7 @@ class HomogenizationField(MSection):
     datasets1D = SubSection(sub_section=Dataset1D.m_def, repeats=True)
     datasets2D = SubSection(sub_section=Dataset2D.m_def, repeats=True)
     datasets3D = SubSection(sub_section=Dataset3D.m_def, repeats=True)
+
 
 class HomogenizationName(MSection):
     name = Quantity(type=str, description='User defined name of the homogenization')
@@ -106,9 +136,7 @@ class GeometryDataset(MSection):
 class Increment(MSection):
     name = Quantity(type=str, description='Name of the increment')
     geometry = SubSection(sub_section=GeometryDataset.m_def, repeats=False)
-    homogenization = SubSection(
-        sub_section=HomogenizationName.m_def, repeats=True
-    )
+    homogenization = SubSection(sub_section=HomogenizationName.m_def, repeats=True)
     phase = SubSection(sub_section=PhaseName.m_def, repeats=True)
 
 
@@ -163,9 +191,9 @@ class DamaskOutput(Schema):
     homogenization_names = Quantity(
         type=str,
         shape=['*'],
-        description='''
+        description="""
         Unique names of the different homogenizations used in the simulation
-        ''',
+        """,
     )
     points_number = Quantity(
         type=int, shape=[], description='Number of points in the simulation'
@@ -177,7 +205,6 @@ class DamaskOutput(Schema):
     geometry = SubSection(sub_section=Geometry.m_def, repeats=False)
     increments = SubSection(sub_section=Increment.m_def, repeats=True)
     setup = SubSection(sub_section=Setup.m_def, repeats=False)
-
 
 
 m_package.__init_metainfo__()
