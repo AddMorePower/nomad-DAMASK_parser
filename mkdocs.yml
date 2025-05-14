@@ -2,7 +2,7 @@ site_name: nomad-DAMASK_parser
 site_description: A parser plugin for the DAMASK output files
 site_author: Guillaume Gaisné
 
-repo_url: https://github.com/Guillaume-Gaisne/nomad-DAMASK_parser
+repo_url: https://github.com/AddMorePower/nomad-DAMASK_parser
 edit_uri: ""
 
 nav:

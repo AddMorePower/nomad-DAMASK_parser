@@ -6,7 +6,7 @@
     "cookiecutter": {
       "full_name": "Guillaume Gaisné",
       "email": "guillaume.gaisne@esrf.fr",
-      "github_username": "Guillaume-Gaisne",
+      "github_username": "AddMorePower",
       "plugin_name": "DAMASK_parser",
       "module_name": "damask_parser",
       "short_description": "A parser plugin for the DAMASK output files",
