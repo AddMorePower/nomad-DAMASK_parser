@@ -14,14 +14,6 @@ definitions:
         description:
           type: str
           description: Information about the nature of the dataset
-        label:
-          type: str
-          shape: ['dim0']
-          description: Label of the compound element
-        entry:
-          type: np.int32
-          shape: ['dim0']
-          description: Entry integer of the compound element
     CompoundDataset2D:
       quantities:
         dim0:
@@ -39,14 +31,6 @@ definitions:
         description:
           type: str
           description: Information about the nature of the dataset
-        label:
-          type: str
-          shape: ['dim0']
-          description: Label of the compound element
-        entry:
-          type: np.int32
-          shape: ['dim0', 'dim1']
-          description: Entry integer of the compound element
     Dataset1D:
       quantities:
         dim0:
@@ -61,10 +45,6 @@ definitions:
         description:
           type: str
           description: Information about the nature of the dataset
-        data:
-          type: np.float64
-          shape: ['dim0']
-          description: Placeholder for now for the data
     Dataset2D:
       quantities:
         dim0:
@@ -82,10 +62,6 @@ definitions:
         description:
           type: str
           description: Information about the nature of the dataset
-        data:
-          type: np.float64
-          shape: ['dim0', 'dim1']
-          description: Placeholder for now for the data
     Dataset3D:
       quantities:
         dim0:
@@ -106,10 +82,6 @@ definitions:
         description:
           type: str
           description: Information about the nature of the dataset
-        data:
-          type: np.float64
-          shape: ['dim0', 'dim1', 'dim2']
-          description: Placeholder for now for the data
     PhaseField:
       quantities:
         name:

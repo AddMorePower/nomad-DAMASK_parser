@@ -56,7 +56,6 @@ class MyParser(MatchingParser):
         dataset.description = self.get_attr(data.attrs, 'description')
         dataset.name = name
         dataset.unit = self.get_attr(data.attrs, 'unit')
-        dataset.data = data[()]
 
     ###############################################################################
     def extract_increment_section(self, increment, group, group_name, sections):
@@ -94,8 +93,6 @@ class MyParser(MatchingParser):
                 dataset.dim0, dataset.dim1 = shape[0], shape[1]
             dataset.name = key
             dataset.description = self.get_attr(key_data.attrs, 'description')
-            dataset.label = key_data['label'].astype(str).flatten()
-            dataset.entry = key_data['entry']
 
             if key == 'homogenization':
                 self.sec_data.points_number = key_data.shape[0]

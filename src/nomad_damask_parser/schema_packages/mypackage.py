@@ -29,14 +29,6 @@ class CompoundDataset1D(MSection):
     description = Quantity(
         type=str, description='Information about the nature of the dataset'
     )
-    label = Quantity(
-        type=str, shape=['dim0'], description='Label of the compound element'
-    )
-    entry = Quantity(
-        type=dtype('int32'),
-        shape=['dim0'],
-        description='Entry integer of the compound element',
-    )
 
 
 class CompoundDataset2D(MSection):
@@ -47,14 +39,6 @@ class CompoundDataset2D(MSection):
     description = Quantity(
         type=str, description='Information about the nature of the dataset'
     )
-    label = Quantity(
-        type=str, shape=['dim0'], description='Label of the compound element'
-    )
-    entry = Quantity(
-        type=dtype('int32'),
-        shape=['dim0', 'dim1'],
-        description='Entry integer of the compound element',
-    )
 
 
 class Dataset1D(MSection):
@@ -63,11 +47,6 @@ class Dataset1D(MSection):
     unit = Quantity(type=str, description='Unit of the data in this dataset')
     description = Quantity(
         type=str, description='Information about the nature of the dataset'
-    )
-    data = Quantity(
-        type=dtype('float64'),
-        shape=['dim0'],
-        description='Placeholder for now for the data',
     )
 
 
@@ -79,11 +58,6 @@ class Dataset2D(MSection):
     description = Quantity(
         type=str, description='Information about the nature of the dataset'
     )
-    data = Quantity(
-        type=dtype('float64'),
-        shape=['dim0', 'dim1'],
-        description='Placeholder for now for the data',
-    )
 
 
 class Dataset3D(MSection):
@@ -94,11 +68,6 @@ class Dataset3D(MSection):
     unit = Quantity(type=str, description='Unit of the data in this dataset')
     description = Quantity(
         type=str, description='Information about the nature of the dataset'
-    )
-    data = Quantity(
-        type=dtype('float64'),
-        shape=['dim0', 'dim1', 'dim2'],
-        description='Placeholder for now for the data',
     )
 
 
