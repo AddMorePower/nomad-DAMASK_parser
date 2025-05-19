@@ -1,0 +1,10 @@
+diff a/pyproject.toml b/pyproject.toml	(rejected hunks)
+@@ -74,7 +76,7 @@ select = [
+     "UP",
+     # isort
+     "I",
+-    # pylint 
++    # pylint
+     "PL",
+ ]
+ 
