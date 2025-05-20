@@ -13,7 +13,6 @@
 from nomad.config import config
 from nomad.datamodel.data import Schema
 from nomad.metainfo import MEnum, MSection, Quantity, SchemaPackage, SubSection
-from numpy import dtype
 
 configuration = config.get_plugin_entry_point(
     'nomad_damask_parser.schema_packages:mypackage'
