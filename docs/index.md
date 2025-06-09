@@ -1,4 +1,4 @@
-# Welcome to the `nomad-DAMASK_parser` documentation
+# Welcome to the `DAMASK_parser` documentation
 
 A parser plugin for the DAMASK output files
 
