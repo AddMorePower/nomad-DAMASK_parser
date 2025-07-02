@@ -185,7 +185,7 @@ definitions:
         datasets2D:
           section: CompoundDataset2D
           repeats: true
-    DamaskOutput:
+    DAMASKOutput:
       quantities:
         code_version:
           type: str

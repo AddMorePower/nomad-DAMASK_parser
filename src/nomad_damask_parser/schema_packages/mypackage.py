@@ -143,7 +143,7 @@ class CellTo(MSection):
 
 ###############################################################################
 ###############################################################################
-class DamaskOutput(Schema):
+class DAMASKOutput(Schema):
     code_version = Quantity(
         type=str,
         description='Version of DAMASK used to produce the results of this simulation',

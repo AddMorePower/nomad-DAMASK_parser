@@ -177,7 +177,7 @@ class MyParser(MatchingParser):
             self.data.get(name) for name in self.data.keys() if 'increment' in name
         ]
 
-        self.sec_data = damask.DamaskOutput()
+        self.sec_data = damask.DAMASKOutput()
 
         archive.data = self.sec_data
 
