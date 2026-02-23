@@ -1,0 +1,29 @@
+diff a/src/damask_parser/parsers/parser.py b/src/damask_parser/parsers/parser.py	(rejected hunks)
+@@ -11,15 +11,15 @@ if TYPE_CHECKING:
+     )
+ 
+ from nomad.config import config
+-from nomad.datamodel.results import Material, Results
++from nomad.datamodel.metainfo.workflow import Workflow
+ from nomad.parsing.parser import MatchingParser
+ 
+ configuration = config.get_plugin_entry_point(
+-    'nomad_damask_parser.parsers:myparser'
++    'damask_parser.parsers:parser_entry_point'
+ )
+ 
+ 
+-class MyParser(MatchingParser):
++class NewParser(MatchingParser):
+     def parse(
+         self,
+         mainfile: str,
+@@ -27,5 +27,6 @@ class MyParser(MatchingParser):
+         logger: 'BoundLogger',
+         child_archives: dict[str, 'EntryArchive'] = None,
+     ) -> None:
+-        logger.info('MyParser.parse', parameter=configuration.parameter)
+-        archive.results = Results(material=Material(elements=['H', 'O']))
++        logger.info('NewParser.parse', parameter=configuration.parameter)
++
++        archive.workflow2 = Workflow(name='test')
