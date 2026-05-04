@@ -24,14 +24,32 @@ maintainers = [
     { name = "Guillaume Gaisné", email = "guillaume.gaisne@esrf.fr" },
 ]
 license = { file = "LICENSE" }
-dependencies = ["nomad-lab>=1.3.0"]
+dependencies = [
+    "nomad-lab>=1.4.1",
+    "pydantic",
+    "temporalio"
+]
 
 [project.urls]
-Repository = "https://github.com/AddMorePower/nomad-DAMASK_parser"
+Repository = "https://github.com/AddMorePower/DAMASK_parser"
 
 [project.optional-dependencies]
-dev = ["ruff", "pytest", "structlog"]
+dev = [
+    "ruff",
+    "pytest",
+    "structlog",
+    "mkdocs",
+    "mkdocs-material==8.1.1",
+    "pymdown-extensions",
+    "mkdocs-click",
+    "pytest-asyncio",
+]
 
+[tool.uv]
+extra-index-url = [
+  "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple",
+]
+    
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
 exclude = [
@@ -86,6 +104,9 @@ fixable = ["ALL"]
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["PLC0415"] # import-outside-top-level
+
 # this is entirely optional, you can remove this if you wish to
 [tool.ruff.format]
 # use single quotes for strings.
@@ -107,9 +128,12 @@ package-dir = { "" = "src" }
 where = ["src"]
 
 [project.entry-points.'nomad.plugin']
-myparser = "nomad_damask_parser.parsers:myparser"
-mypackage = "nomad_damask_parser.schema_packages:mypackage"
+parser_entry_point = "damask_parser.parsers:parser_entry_point"
+schema_package_entry_point = "damask_parser.schema_packages:schema_package_entry_point"
 
+
+example_upload_entry_point = "damask_parser.example_uploads:example_upload_entry_point"
+action_entry_point = "damask_parser.actions:simple_action_entry_point"
 
 [tool.cruft]
 # Avoid updating workflow files, this leads to permissions issues
