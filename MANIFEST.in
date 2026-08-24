@@ -1,1 +1,1 @@
-recursive-include * nomad_plugin.yaml
+graft src/damask_parser/example_uploads
