@@ -1,8 +1,8 @@
-site_name: nomad-DAMASK_parser
+site_name: DAMASK_parser
 site_description: A parser plugin for the DAMASK output files
 site_author: Guillaume Gaisné
 
-repo_url: https://github.com/AddMorePower/nomad-DAMASK_parser
+repo_url: https://github.com/AddMorePower/DAMASK_parser
 edit_uri: ""
 
 nav:
@@ -56,5 +56,4 @@ extra_css:
   - stylesheets/extra.css
 extra_javascript:
   - javascript.js
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
